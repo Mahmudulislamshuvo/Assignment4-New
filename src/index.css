@@ -47,7 +47,7 @@ body {
 }
 
 .button-primary {
-  background: linear-gradient(120deg, var(--accent), #ff6b81);
+  background: linear-gradient(120deg, #ff385c, #ff6b81);
   color: #ffffff;
   border-radius: 12px;
   font-weight: 600;
