@@ -10,10 +10,10 @@ const Contents = () => {
     <>
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         {/* <!-- Sidebar Filters --> */}
-        <Filter />
+        <Filter data={data} />
 
         {/* <!-- Products Grid --> */}
-        <ProductGrid />
+        <ProductGrid data={data} />
       </div>
     </>
   );
