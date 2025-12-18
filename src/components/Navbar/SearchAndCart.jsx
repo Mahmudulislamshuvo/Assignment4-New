@@ -1,16 +1,16 @@
 const SearchAndCart = () => {
   return (
     <>
-      <div class="flex items-center gap-3">
-        <div class="hidden sm:block">
-          <div class="flex items-center gap-2 px-3 py-2 rounded-full border border-slate-200 bg-white shadow-sm">
+      <div className="flex items-center gap-3">
+        <div className="hidden sm:block">
+          <div className="flex items-center gap-2 px-3 py-2 rounded-full border border-slate-200 bg-white shadow-sm">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              class="h-4 w-4 text-slate-400"
+              className="h-4 w-4 text-slate-400"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              stroke-width="2"
+              strokeWidth="2"
             >
               <circle cx="11" cy="11" r="7"></circle>
               <line x1="16.65" y1="16.65" x2="21" y2="21"></line>
@@ -18,29 +18,29 @@ const SearchAndCart = () => {
             <input
               type="text"
               placeholder="Search laptops, GPUs, desktops..."
-              class="bg-transparent text-sm placeholder:text-slate-400 focus:outline-none w-64"
+              className="bg-transparent text-sm placeholder:text-slate-400 focus:outline-none w-64"
             />
           </div>
         </div>
         <a
           href="cart.html"
-          class="relative flex items-center gap-2 px-3 py-2 rounded-full border border-slate-200 bg-white shadow-sm hover:border-rose-300"
+          className="relative flex items-center gap-2 px-3 py-2 rounded-full border border-slate-200 bg-white shadow-sm hover:border-rose-300"
         >
           <svg
-            class="w-5 h-5 text-rose-500"
+            className="w-5 h-5 text-rose-500"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
           >
             <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
               d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
             ></path>
           </svg>
-          <span class="text-sm font-semibold text-slate-900">Cart</span>
-          <span class="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-rose-500 text-white text-xs font-bold flex items-center justify-center shadow">
+          <span className="text-sm font-semibold text-slate-900">Cart</span>
+          <span className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-rose-500 text-white text-xs font-bold flex items-center justify-center shadow">
             3
           </span>
         </a>
