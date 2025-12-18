@@ -3,8 +3,7 @@ import Filter from "./Filter";
 import ProductGrid from "./ProductGrid";
 
 const Contents = () => {
-  const { data, isLoaing, error } = useGetAllProductQuery();
-  console.log(data);
+  const { data } = useGetAllProductQuery();
 
   return (
     <>
