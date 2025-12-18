@@ -1,40 +1,50 @@
-const Filter = () => {
+const Filter = ({
+  data,
+  selectedCategories,
+  handleCategoryChange,
+  selectedPrice,
+  handlePriceChange,
+  selectedRating,
+  handleRatingChange,
+  clearFilters,
+}) => {
+  const categories = data?.data
+    ? [...new Set(data.data.map((p) => p.category))]
+    : [];
+  const ratings = [4.5, 4.0, 3.5];
+  const prices = ["0-2000", "2000-5000", "5000-10000"];
+
   return (
     <div className="md:col-span-1 space-y-4">
       <div className="soft-card p-6">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-semibold text-slate-900">Filters</h3>
-          <button className="text-xs text-rose-500 font-semibold">Clear</button>
+          <button
+            className="text-xs text-rose-500 font-semibold"
+            onClick={clearFilters}
+          >
+            Clear
+          </button>
         </div>
 
         {/* Category Filter */}
         <div className="mb-6">
           <h4 className="font-medium text-sm mb-3 text-slate-700">Category</h4>
           <div className="space-y-2">
-            <label className="flex items-center cursor-pointer">
-              <input
-                type="checkbox"
-                defaultChecked
-                className="w-4 h-4 text-rose-500 rounded border-slate-300"
-              />
-              <span className="ml-3 text-sm text-slate-700">Apple Mac Pro</span>
-            </label>
-
-            <label className="flex items-center cursor-pointer">
-              <input
-                type="checkbox"
-                className="w-4 h-4 text-rose-500 rounded border-slate-300"
-              />
-              <span className="ml-3 text-sm text-slate-700">Gaming Laptop</span>
-            </label>
-
-            <label className="flex items-center cursor-pointer">
-              <input
-                type="checkbox"
-                className="w-4 h-4 text-rose-500 rounded border-slate-300"
-              />
-              <span className="ml-3 text-sm text-slate-700">Workstation</span>
-            </label>
+            {categories?.map((category) => (
+              <label
+                key={category}
+                className="flex items-center cursor-pointer"
+              >
+                <input
+                  type="checkbox"
+                  checked={selectedCategories.includes(category)}
+                  onChange={() => handleCategoryChange(category)}
+                  className="w-4 h-4 text-rose-500 rounded border-slate-300"
+                />
+                <span className="ml-3 text-sm text-slate-700">{category}</span>
+              </label>
+            ))}
           </div>
         </div>
 
@@ -44,33 +54,18 @@ const Filter = () => {
             Price Range
           </h4>
           <div className="space-y-2">
-            <label className="flex items-center cursor-pointer">
-              <input
-                type="checkbox"
-                name="price"
-                className="w-4 h-4 text-rose-500"
-              />
-              <span className="ml-3 text-sm text-slate-700">$0 - $2000</span>
-            </label>
-
-            <label className="flex items-center cursor-pointer">
-              <input
-                type="checkbox"
-                name="price"
-                className="w-4 h-4 text-rose-500"
-              />
-              <span className="ml-3 text-sm text-slate-700">$2000 - $5000</span>
-            </label>
-
-            <label className="flex items-center cursor-pointer">
-              <input
-                type="checkbox"
-                name="price"
-                defaultChecked
-                className="w-4 h-4 text-rose-500"
-              />
-              <span className="ml-3 text-sm text-slate-700">$5000+</span>
-            </label>
+            {prices.map((price) => (
+              <label key={price} className="flex items-center cursor-pointer">
+                <input
+                  type="radio"
+                  name="price"
+                  checked={selectedPrice === price}
+                  onChange={() => handlePriceChange(price)}
+                  className="w-4 h-4 text-rose-500"
+                />
+                <span className="ml-3 text-sm text-slate-700">${price}</span>
+              </label>
+            ))}
           </div>
         </div>
 
@@ -78,30 +73,20 @@ const Filter = () => {
         <div>
           <h4 className="font-medium text-sm mb-3 text-slate-700">Rating</h4>
           <div className="space-y-2">
-            <label className="flex items-center cursor-pointer">
-              <input
-                type="checkbox"
-                defaultChecked
-                className="w-4 h-4 text-rose-500 rounded border-slate-300"
-              />
-              <span className="ml-3 text-sm text-slate-700">4.5 ⭐ & up</span>
-            </label>
-
-            <label className="flex items-center cursor-pointer">
-              <input
-                type="checkbox"
-                className="w-4 h-4 text-rose-500 rounded border-slate-300"
-              />
-              <span className="ml-3 text-sm text-slate-700">4.0 ⭐ & up</span>
-            </label>
-
-            <label className="flex items-center cursor-pointer">
-              <input
-                type="checkbox"
-                className="w-4 h-4 text-rose-500 rounded border-slate-300"
-              />
-              <span className="ml-3 text-sm text-slate-700">3.5 ⭐ & up</span>
-            </label>
+            {ratings.map((rating) => (
+              <label key={rating} className="flex items-center cursor-pointer">
+                <input
+                  type="radio"
+                  name="rating"
+                  checked={selectedRating === rating}
+                  onChange={() => handleRatingChange(rating)}
+                  className="w-4 h-4 text-rose-500 rounded border-slate-300"
+                />
+                <span className="ml-3 text-sm text-slate-700">
+                  {rating} ⭐ & up
+                </span>
+              </label>
+            ))}
           </div>
         </div>
       </div>

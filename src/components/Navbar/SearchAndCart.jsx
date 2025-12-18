@@ -1,4 +1,4 @@
-const SearchAndCart = () => {
+const SearchAndCart = ({ onCartClick }) => {
   return (
     <>
       <div className="flex items-center gap-3">
@@ -24,6 +24,7 @@ const SearchAndCart = () => {
         </div>
         <a
           href="cart.html"
+          onClick={() => onCartClick(true)}
           className="relative flex items-center gap-2 px-3 py-2 rounded-full border border-slate-200 bg-white shadow-sm hover:border-rose-300"
         >
           <svg

@@ -1,8 +1,8 @@
 import { useState } from "react";
 import formatDate from "../../hooks/formatDate";
 import Sorting from "./Sorting";
-import { useGetAllProductQuery } from "../../Features/Api/ProductApi";
 import CartLoadingSkeliton from "./CartLoadingSkeliton";
+import { useGetAllProductQuery } from "../../Features/Api/ProductApi";
 
 const ProductGrid = ({ data }) => {
   const { isLoading } = useGetAllProductQuery();
