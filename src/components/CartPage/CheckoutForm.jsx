@@ -1,4 +1,4 @@
-const CheckoutForm = () => {
+const CheckoutForm = ({ cart }) => {
   return (
     <>
       <div className="lg:col-span-1">

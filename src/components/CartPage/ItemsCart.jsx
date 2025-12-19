@@ -1,3 +1,5 @@
+import EmptyCart from "./EmptyCart";
+
 const ItemsCart = ({ cart, setCart }) => {
   const handleIncrease = (id) => {
     setCart((prev) =>
@@ -21,6 +23,9 @@ const ItemsCart = ({ cart, setCart }) => {
     setCart((prev) => prev.filter((item) => item.id !== id));
   };
 
+  if (cart.length === 0) {
+    return <EmptyCart />;
+  }
   return (
     <div className="lg:col-span-2">
       <div className="space-y-4">
