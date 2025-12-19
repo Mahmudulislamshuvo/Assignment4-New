@@ -39,22 +39,32 @@ const ProductGrid = ({ data }) => {
 
   const sortedProducts = getSortedProducts();
 
-  // add to cart mutation hook
-  const handleAddToCart = async (product) => {
+  const handleAddToCart = (product) => {
+    if (product.stock <= 0) {
+      alert("This product is out of stock!");
+      return;
+    }
+
     setCart((prevCart) => {
       const existProduct = prevCart.find((item) => item.id === product.id);
 
-      // add quantity if already  available
       if (existProduct) {
+        if (existProduct.stock <= 0) {
+          alert("No more stock available for this item!");
+          return prevCart;
+        }
+
         return prevCart.map((item) =>
           item.id === product.id
-            ? { ...item, quantity: item.quantity + 1 }
+            ? { ...item, quantity: item.quantity + 1, stock: item.stock - 1 }
             : item
         );
       }
 
-      // product does not exist → add new
-      return [...prevCart, { ...product, quantity: 1 }];
+      return [
+        ...prevCart,
+        { ...product, quantity: 1, stock: product.stock - 1 },
+      ];
     });
   };
 
@@ -126,6 +136,7 @@ const ProductGrid = ({ data }) => {
                     <button
                       className="w-full button-primary py-2.5 rounded-lg font-semibold"
                       onClick={() => handleAddToCart(product)}
+                      disabled={product.stock === 0}
                     >
                       Add to Cart
                     </button>
