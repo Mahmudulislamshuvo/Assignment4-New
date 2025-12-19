@@ -3,7 +3,10 @@ import { useDispatch } from "react-redux";
 import formatDate from "../../hooks/formatDate";
 import Sorting from "./Sorting";
 import CartLoadingSkeliton from "./CartLoadingSkeliton";
-import { useGetAllProductQuery, productApi } from "../../Features/Api/ProductApi";
+import {
+  useGetAllProductQuery,
+  productApi,
+} from "../../Features/Api/ProductApi";
 import { ProductContext } from "../../context";
 
 const ProductGrid = ({ data }) => {
