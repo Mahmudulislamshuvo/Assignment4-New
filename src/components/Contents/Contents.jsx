@@ -1,7 +1,8 @@
 import { useGetAllProductQuery } from "../../Features/Api/ProductApi";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Filter from "./Filter";
 import ProductGrid from "./ProductGrid";
+import { ProductContext } from "../../context";
 
 const Contents = () => {
   const { data } = useGetAllProductQuery();
@@ -9,6 +10,7 @@ const Contents = () => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedPrice, setSelectedPrice] = useState("");
   const [selectedRating, setSelectedRating] = useState(null);
+  const { searchTerm } = useContext(ProductContext);
 
   // Handle Category Change
   const handleCategoryChange = (category) => {
@@ -41,6 +43,12 @@ const Contents = () => {
     if (!data?.data) return [];
 
     let filtered = [...data.data];
+
+    if (searchTerm) {
+      filtered = filtered.filter((product) =>
+        product.title.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
 
     if (selectedCategories.length > 0) {
       filtered = filtered.filter((product) =>

@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { ProductContext } from "../../context";
 
 const SearchAndCart = ({ onCartClick }) => {
-  const { cart } = useContext(ProductContext);
+  const { cart, searchTerm, setSearchTerm } = useContext(ProductContext);
 
   return (
     <>
@@ -24,6 +24,8 @@ const SearchAndCart = ({ onCartClick }) => {
               type="text"
               placeholder="Search laptops, GPUs, desktops..."
               className="bg-transparent text-sm placeholder:text-slate-400 focus:outline-none w-64"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
         </div>
