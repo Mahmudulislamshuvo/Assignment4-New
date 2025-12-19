@@ -1,4 +1,9 @@
+import { useContext } from "react";
+import { ProductContext } from "../../context";
+
 const SearchAndCart = ({ onCartClick }) => {
+  const { cart } = useContext(ProductContext);
+
   return (
     <>
       <div className="flex items-center gap-3">
@@ -23,9 +28,8 @@ const SearchAndCart = ({ onCartClick }) => {
           </div>
         </div>
         <a
-          href="cart.html"
-          onClick={() => onCartClick(true)}
-          className="relative flex items-center gap-2 px-3 py-2 rounded-full border border-slate-200 bg-white shadow-sm hover:border-rose-300"
+          onClick={() => onCartClick((prev) => !prev)}
+          className="relative flex items-center gap-2 px-3 py-2 rounded-full border border-slate-200 bg-white shadow-sm hover:border-rose-300 cursor-pointer"
         >
           <svg
             className="w-5 h-5 text-rose-500"
@@ -42,7 +46,7 @@ const SearchAndCart = ({ onCartClick }) => {
           </svg>
           <span className="text-sm font-semibold text-slate-900">Cart</span>
           <span className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-rose-500 text-white text-xs font-bold flex items-center justify-center shadow">
-            3
+            {!cart ? 0 : cart.length || 0}
           </span>
         </a>
       </div>

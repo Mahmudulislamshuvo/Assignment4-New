@@ -9,7 +9,20 @@ export const productApi = createApi({
     GetAllProduct: builder.query({
       query: () => "products",
     }),
+
+    GetCart: builder.query({
+      query: () => "cart",
+    }),
+
+    addToCart: builder.mutation({
+      query: (product) => ({
+        url: "cart",
+        method: "POST",
+        body: product,
+      }),
+    }),
   }),
 });
 
-export const { useGetAllProductQuery } = productApi;
+export const { useGetAllProductQuery, useGetCartQuery, useAddToCartMutation } =
+  productApi;

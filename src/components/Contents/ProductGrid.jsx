@@ -1,12 +1,14 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import formatDate from "../../hooks/formatDate";
 import Sorting from "./Sorting";
 import CartLoadingSkeliton from "./CartLoadingSkeliton";
 import { useGetAllProductQuery } from "../../Features/Api/ProductApi";
+import { ProductContext } from "../../context";
 
 const ProductGrid = ({ data }) => {
   const { isLoading } = useGetAllProductQuery();
   const [sortOptions, setSortOptions] = useState("Newest");
+  const { setCart } = useContext(ProductContext);
 
   const getSortedProducts = () => {
     // checking if no data
@@ -36,6 +38,25 @@ const ProductGrid = ({ data }) => {
   };
 
   const sortedProducts = getSortedProducts();
+
+  // add to cart mutation hook
+  const handleAddToCart = async (product) => {
+    setCart((prevCart) => {
+      const existProduct = prevCart.find((item) => item.id === product.id);
+
+      // add quantity if already  available
+      if (existProduct) {
+        return prevCart.map((item) =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      }
+
+      // product does not exist → add new
+      return [...prevCart, { ...product, quantity: 1 }];
+    });
+  };
 
   return (
     <>
@@ -104,8 +125,7 @@ const ProductGrid = ({ data }) => {
 
                     <button
                       className="w-full button-primary py-2.5 rounded-lg font-semibold"
-                      // Optional: Add click handler
-                      // onClick={() => addToCart(product)}
+                      onClick={() => handleAddToCart(product)}
                     >
                       Add to Cart
                     </button>

@@ -5,7 +5,7 @@ import ProductGrid from "./ProductGrid";
 
 const Contents = () => {
   const { data } = useGetAllProductQuery();
-  console.log(data);
+  // console.log(data);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedPrice, setSelectedPrice] = useState("");
   const [selectedRating, setSelectedRating] = useState(null);
