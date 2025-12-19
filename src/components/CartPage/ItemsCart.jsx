@@ -1,25 +1,74 @@
+import { useDispatch } from "react-redux";
+import { useGetAllProductQuery, productApi } from "../../Features/Api/ProductApi";
 import EmptyCart from "./EmptyCart";
 
 const ItemsCart = ({ cart, setCart }) => {
+  const dispatch = useDispatch();
+  const { data: allProducts } = useGetAllProductQuery();
+
   const handleIncrease = (id) => {
+    // Check stock availability in the cache
+    const productInCache = allProducts?.data?.find((p) => p.id === id);
+
+    if (!productInCache || productInCache.stock <= 0) {
+      alert("Out of stock!");
+      return;
+    }
+
+    // Sync with RTK Query Cache
+    dispatch(
+      productApi.util.updateQueryData("GetAllProduct", undefined, (draft) => {
+        const product = draft.data.find((p) => p.id === id);
+        if (product) {
+          product.stock -= 1;
+        }
+      })
+    );
+
+    // Update Local State
     setCart((prev) =>
       prev.map((item) =>
-        item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+        item.id === id
+          ? { ...item, quantity: item.quantity + 1, stock: item.stock - 1 }
+          : item
       )
     );
   };
 
   const handleDecrease = (id) => {
+    // Sync with RTK Query Cache
+    dispatch(
+      productApi.util.updateQueryData("GetAllProduct", undefined, (draft) => {
+        const product = draft.data.find((p) => p.id === id);
+        if (product) {
+          product.stock += 1;
+        }
+      })
+    );
+
     setCart((prev) =>
       prev.map((item) =>
         item.id === id && item.quantity > 1
-          ? { ...item, quantity: item.quantity - 1 }
+          ? { ...item, quantity: item.quantity - 1, stock: item.stock + 1 }
           : item
       )
     );
   };
 
   const handleRemove = (id) => {
+    const itemToRemove = cart.find((item) => item.id === id);
+    if (!itemToRemove) return;
+
+    // Sync with RTK Query Cache (Restore all stock)
+    dispatch(
+      productApi.util.updateQueryData("GetAllProduct", undefined, (draft) => {
+        const product = draft.data.find((p) => p.id === id);
+        if (product) {
+          product.stock += itemToRemove.quantity;
+        }
+      })
+    );
+
     setCart((prev) => prev.filter((item) => item.id !== id));
   };
 

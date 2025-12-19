@@ -1,11 +1,13 @@
 import { useContext, useState } from "react";
+import { useDispatch } from "react-redux";
 import formatDate from "../../hooks/formatDate";
 import Sorting from "./Sorting";
 import CartLoadingSkeliton from "./CartLoadingSkeliton";
-import { useGetAllProductQuery } from "../../Features/Api/ProductApi";
+import { useGetAllProductQuery, productApi } from "../../Features/Api/ProductApi";
 import { ProductContext } from "../../context";
 
 const ProductGrid = ({ data }) => {
+  const dispatch = useDispatch();
   const { isLoading } = useGetAllProductQuery();
   const [sortOptions, setSortOptions] = useState("Newest");
   const { setCart } = useContext(ProductContext);
@@ -44,6 +46,15 @@ const ProductGrid = ({ data }) => {
       alert("This product is out of stock!");
       return;
     }
+
+    dispatch(
+      productApi.util.updateQueryData("GetAllProduct", undefined, (draft) => {
+        const productToUpdate = draft.data.find((p) => p.id === product.id);
+        if (productToUpdate) {
+          productToUpdate.stock -= 1;
+        }
+      })
+    );
 
     setCart((prevCart) => {
       const existProduct = prevCart.find((item) => item.id === product.id);
