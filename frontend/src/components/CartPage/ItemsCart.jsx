@@ -1,6 +1,10 @@
 import { useDispatch } from "react-redux";
-import { useGetAllProductQuery, productApi } from "../../Features/Api/ProductApi";
+import {
+  useGetAllProductQuery,
+  productApi,
+} from "../../Features/Api/ProductApi";
 import EmptyCart from "./EmptyCart";
+import { InfoToast, SuccessToast } from "../../utils/Toastify";
 
 const ItemsCart = ({ cart, setCart }) => {
   const dispatch = useDispatch();
@@ -11,7 +15,7 @@ const ItemsCart = ({ cart, setCart }) => {
     const productInCache = allProducts?.data?.find((p) => p.id === id);
 
     if (!productInCache || productInCache.stock <= 0) {
-      alert("Out of stock!");
+      InfoToast("Out of stock!");
       return;
     }
 
@@ -24,6 +28,7 @@ const ItemsCart = ({ cart, setCart }) => {
         }
       })
     );
+    SuccessToast("Product quantity increased in cart.");
 
     // Update Local State
     setCart((prev) =>
@@ -45,6 +50,7 @@ const ItemsCart = ({ cart, setCart }) => {
         }
       })
     );
+    SuccessToast("Product quantity decreased in cart.");
 
     setCart((prev) =>
       prev.map((item) =>
@@ -62,12 +68,13 @@ const ItemsCart = ({ cart, setCart }) => {
     // Sync with RTK Query Cache (Restore all stock)
     dispatch(
       productApi.util.updateQueryData("GetAllProduct", undefined, (draft) => {
-        const product = draft.data.find((p) => p.id === id);
+        const product = draft?.data?.find((p) => p.id === id);
         if (product) {
           product.stock += itemToRemove.quantity;
         }
       })
     );
+    InfoToast("Product removed from cart.");
 
     setCart((prev) => prev.filter((item) => item.id !== id));
   };

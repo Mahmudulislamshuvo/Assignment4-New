@@ -5,11 +5,14 @@ import Hero from "./components/Hero/Hero";
 import Navbar from "./components/Navbar/Navbar";
 import CartPage from "./components/CartPage/CartPage";
 import { CartProvider } from "./provider";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   const [isCartItems, setIsCartItems] = useState(false);
   return (
     <div>
+      <ToastContainer />
       <CartProvider>
         <Navbar onCartClick={setIsCartItems} />
         {isCartItems ? (

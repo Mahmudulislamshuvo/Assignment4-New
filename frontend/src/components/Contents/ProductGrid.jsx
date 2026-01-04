@@ -8,6 +8,7 @@ import {
   productApi,
 } from "../../Features/Api/ProductApi";
 import { ProductContext } from "../../context";
+import { InfoToast, SuccessToast } from "../../utils/Toastify";
 
 const ProductGrid = ({ data }) => {
   const dispatch = useDispatch();
@@ -46,7 +47,9 @@ const ProductGrid = ({ data }) => {
 
   const handleAddToCart = (product) => {
     if (product.stock <= 0) {
-      alert("This product is out of stock!");
+      InfoToast("This product is out of stock!");
+      console.log("Click");
+
       return;
     }
 
@@ -58,6 +61,7 @@ const ProductGrid = ({ data }) => {
         }
       })
     );
+    SuccessToast("Product added to cart!");
 
     setCart((prevCart) => {
       const existProduct = prevCart.find((item) => item.id === product.id);
@@ -150,7 +154,6 @@ const ProductGrid = ({ data }) => {
                     <button
                       className="w-full button-primary py-2.5 rounded-lg font-semibold"
                       onClick={() => handleAddToCart(product)}
-                      disabled={product.stock === 0}
                     >
                       Add to Cart
                     </button>

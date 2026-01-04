@@ -1,8 +1,11 @@
-const Logo = () => {
+const Logo = ({ onCartClick }) => {
   return (
     <>
-      <div className="flex items-center gap-4">
-        <div className="h-10 w-10 rounded-full bg-gradient-to-br from-rose-400 to-orange-300 flex items-center justify-center text-white font-bold">
+      <div
+        onClick={() => onCartClick(false)}
+        className="flex items-center gap-4 cursor-pointer"
+      >
+        <div className="h-10 w-10 rounded-full bg-linear-to-br from-rose-400 to-orange-300 flex items-center justify-center text-white font-bold">
           TH
         </div>
         <div className="flex flex-col">

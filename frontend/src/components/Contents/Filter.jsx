@@ -20,7 +20,7 @@ const Filter = ({
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-semibold text-slate-900">Filters</h3>
           <button
-            className="text-xs text-rose-500 font-semibold"
+            className="text-xs text-rose-500 font-semibold cursor-pointer"
             onClick={clearFilters}
           >
             Clear
